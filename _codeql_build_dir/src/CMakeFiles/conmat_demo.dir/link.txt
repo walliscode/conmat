@@ -1,0 +1,1 @@
+/home/runner/work/conmat/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/conmat_demo.dir/link.d CMakeFiles/conmat_demo.dir/demo.cpp.o -o conmat_demo  libconmat.a

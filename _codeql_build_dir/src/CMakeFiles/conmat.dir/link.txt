@@ -1,0 +1,2 @@
+/usr/bin/ar qc libconmat.a CMakeFiles/conmat.dir/conmat.cpp.o
+/usr/bin/ranlib libconmat.a

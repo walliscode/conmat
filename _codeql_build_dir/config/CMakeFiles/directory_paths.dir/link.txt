@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdirectory_paths.a CMakeFiles/directory_paths.dir/directory_paths.cpp.o
+/usr/bin/ranlib libdirectory_paths.a
