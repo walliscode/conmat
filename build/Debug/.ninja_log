@@ -1,0 +1,7 @@
+# ninja log v7
+0	1618	1763200370266813032	config/CMakeFiles/directory_paths.dir/directory_paths.cpp.o.ddi	ba2d2e80350848b5
+1618	1621	1763200371886816061	config/CMakeFiles/directory_paths.dir/CXX.dd	c008548a6c178cc8
+1618	1621	1763200371886816061	/home/runner/work/conmat/conmat/build/Debug/config/CMakeFiles/directory_paths.dir/CXXModules.json	c008548a6c178cc8
+1618	1621	1763200371886816061	config/CMakeFiles/directory_paths.dir/directory_paths.cpp.o.modmap	c008548a6c178cc8
+1621	4660	1763200371887816074	config/CMakeFiles/directory_paths.dir/directory_paths.cpp.o	ade6c1da9046ee0f
+4661	12493	1763200374927840070	config/libdirectory_paths.a	6b61ab1a64988fd5

@@ -1,0 +1,30 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "Clang",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/runner/work/conmat/conmat/build/Debug/config",
+	"dir-cur-src" : "/home/runner/work/conmat/conmat/config",
+	"dir-top-bld" : "/home/runner/work/conmat/conmat/build/Debug",
+	"dir-top-src" : "/home/runner/work/conmat/conmat",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"/home/runner/work/conmat/conmat/config"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/runner/work/conmat/conmat/build/Debug/config/CMakeFiles/directory_paths.dir",
+	"sources" : 
+	{
+		"config/CMakeFiles/directory_paths.dir/directory_paths.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/runner/work/conmat/conmat/build/Debug/config/directory_paths.cpp"
+		}
+	}
+}

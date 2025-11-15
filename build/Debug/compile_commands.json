@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/runner/work/conmat/conmat/build/Debug",
+  "command": "/usr/bin/clang++ -I/home/runner/work/conmat/conmat/config -g -std=gnu++23 @config/CMakeFiles/directory_paths.dir/directory_paths.cpp.o.modmap -o config/CMakeFiles/directory_paths.dir/directory_paths.cpp.o -c /home/runner/work/conmat/conmat/build/Debug/config/directory_paths.cpp",
+  "file": "/home/runner/work/conmat/conmat/build/Debug/config/directory_paths.cpp",
+  "output": "config/CMakeFiles/directory_paths.dir/directory_paths.cpp.o"
+}
+]
