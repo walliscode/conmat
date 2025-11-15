@@ -42,57 +42,54 @@ ctest --preset Debug
 int main() {
   using namespace conmat;
   
-  std::cout << colorize("Red text", Color::Red) << std::endl;
-  std::cout << colorize("Green text", Color::Green) << std::endl;
-  std::cout << colorize("Blue text", Color::Blue) << std::endl;
+  std::cout << Colorize("Red text", Color::Red) << std::endl;
+  std::cout << Colorize("Green text", Color::Green) << std::endl;
+  std::cout << Colorize("Blue text", Color::Blue) << std::endl;
 }
 ```
 
 ### Text Styles
 
 ```cpp
-std::cout << stylize("Bold text", Style::Bold) << std::endl;
-std::cout << stylize("Italic text", Style::Italic) << std::endl;
-std::cout << stylize("Underline text", Style::Underline) << std::endl;
+std::cout << Stylize("Bold text", Style::Bold) << std::endl;
+std::cout << Stylize("Italic text", Style::Italic) << std::endl;
+std::cout << Stylize("Underline text", Style::Underline) << std::endl;
 ```
 
 ### Combined Formatting
 
 ```cpp
 FormatOptions opts(Color::Red, Style::Bold);
-std::cout << format("Bold red text", opts) << std::endl;
+std::cout << Format("Bold red text", opts) << std::endl;
 
 FormatOptions with_bg(Color::White, Color::Blue);
-std::cout << format("White on blue", with_bg) << std::endl;
+std::cout << Format("White on blue", with_bg) << std::endl;
 ```
 
 ### Dividers
 
 ```cpp
 // Default divider (80 '=' characters)
-std::cout << divider() << std::endl;
+std::cout << Divider() << std::endl;
 
 // Custom symbol and width
-std::cout << divider("-", 40) << std::endl;
-std::cout << divider("*", 50) << std::endl;
-
-// Convenience functions
-std::cout << horizontal_line(70) << std::endl;  // Uses '-'
+std::cout << Divider("-", 40) << std::endl;
+std::cout << Divider("*", 50) << std::endl;
 std::cout << double_line(80) << std::endl;      // Uses '='
 
 // Colored dividers
 FormatOptions cyan(Color::Cyan);
-std::cout << divider("=", 80, cyan) << std::endl;
+std::cout << Divider("=", 80, cyan) << std::endl;
 ```
 
 ### String Safety
 
 ```cpp
 // Sanitize removes control characters
-std::string safe = sanitize("text\x1b[31mwith\x1b[0mcodes");
+std::string safe = Sanitize("text\x1b[31mwith\x1b[0mcodes");
 
 // Strip ANSI codes
-std::string plain = strip_ansi(colorize("colored", Color::Red));
+std::string plain = StripAnsi(Colorize("colored", Color::Red));
 ```
 
 ## API Reference
@@ -104,14 +101,12 @@ std::string plain = strip_ansi(colorize("colored", Color::Red));
 
 ### Functions
 
-- `format(text, options)` - Format text with full options
-- `colorize(text, color)` - Apply foreground color
-- `stylize(text, style)` - Apply text style
-- `divider(symbol, width, options)` - Create divider line
-- `horizontal_line(width, options)` - Create horizontal line with '-'
-- `double_line(width, options)` - Create double line with '='
-- `sanitize(text)` - Remove control characters
-- `strip_ansi(text)` - Remove ANSI escape codes
+- `Format(text, options)` - Format text with full options
+- `Colorize(text, color)` - Apply foreground color
+- `Stylize(text, style)` - Apply text style
+- `Divider(symbol, width, options)` - Create divider line with custom symbol (default "=")
+- `Sanitize(text)` - Remove control characters
+- `StripAnsi(text)` - Remove ANSI escape codes
 
 ### FormatOptions
 

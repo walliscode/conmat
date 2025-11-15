@@ -76,9 +76,9 @@ std::string get_style_code(Style style) {
 
 } // anonymous namespace
 
-std::string format(std::string_view text, const FormatOptions& options) {
+std::string Format(std::string_view text, const FormatOptions& options) {
   // Sanitize input first
-  std::string safe_text = sanitize(text);
+  std::string safe_text = Sanitize(text);
   
   std::ostringstream result;
   
@@ -102,25 +102,25 @@ std::string format(std::string_view text, const FormatOptions& options) {
   return result.str();
 }
 
-std::string colorize(std::string_view text, Color color) {
+std::string Colorize(std::string_view text, Color color) {
   FormatOptions options;
   options.foreground = color;
-  return conmat::format(text, options);
+  return Format(text, options);
 }
 
-std::string stylize(std::string_view text, Style style) {
+std::string Stylize(std::string_view text, Style style) {
   FormatOptions options;
   options.style = style;
-  return conmat::format(text, options);
+  return Format(text, options);
 }
 
-std::string divider(std::string_view symbol, size_t width, const FormatOptions& options) {
+std::string Divider(std::string_view symbol, size_t width, const FormatOptions& options) {
   if (symbol.empty() || width == 0) {
     return "";
   }
   
   // Sanitize the symbol to prevent injection
-  std::string safe_symbol = sanitize(symbol);
+  std::string safe_symbol = Sanitize(symbol);
   
   // Build the divider by repeating the symbol
   std::ostringstream result;
@@ -141,21 +141,13 @@ std::string divider(std::string_view symbol, size_t width, const FormatOptions& 
   if (options.foreground != Color::Default || 
       options.background != Color::Default ||
       options.style != Style::Default) {
-    return conmat::format(result.str(), options);
+    return Format(result.str(), options);
   }
   
   return result.str();
 }
 
-std::string horizontal_line(size_t width, const FormatOptions& options) {
-  return divider("-", width, options);
-}
-
-std::string double_line(size_t width, const FormatOptions& options) {
-  return divider("=", width, options);
-}
-
-std::string sanitize(std::string_view text) {
+std::string Sanitize(std::string_view text) {
   std::string result;
   result.reserve(text.length());
   
@@ -177,7 +169,7 @@ std::string sanitize(std::string_view text) {
   return result;
 }
 
-std::string strip_ansi(std::string_view text) {
+std::string StripAnsi(std::string_view text) {
   // Remove ANSI escape sequences using regex
   // Pattern matches: ESC [ ... m (and other ANSI codes)
   std::string str(text);

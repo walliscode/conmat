@@ -70,7 +70,7 @@ struct FormatOptions {
 /// \return Formatted string with ANSI codes
 ///
 ////////////////////////////////////////////////////////////
-std::string format(std::string_view text, const FormatOptions& options = {});
+std::string Format(std::string_view text, const FormatOptions& options = {});
 
 ////////////////////////////////////////////////////////////
 /// \brief Format text with just a foreground color
@@ -79,7 +79,7 @@ std::string format(std::string_view text, const FormatOptions& options = {});
 /// \return Formatted string with color
 ///
 ////////////////////////////////////////////////////////////
-std::string colorize(std::string_view text, Color color);
+std::string Colorize(std::string_view text, Color color);
 
 ////////////////////////////////////////////////////////////
 /// \brief Format text with a style
@@ -88,7 +88,7 @@ std::string colorize(std::string_view text, Color color);
 /// \return Formatted string with style
 ///
 ////////////////////////////////////////////////////////////
-std::string stylize(std::string_view text, Style style);
+std::string Stylize(std::string_view text, Style style);
 
 ////////////////////////////////////////////////////////////
 /// \brief Create a divider line
@@ -98,29 +98,9 @@ std::string stylize(std::string_view text, Style style);
 /// \return Formatted divider string
 ///
 ////////////////////////////////////////////////////////////
-std::string divider(std::string_view symbol = "=", 
+std::string Divider(std::string_view symbol = "=", 
                     size_t width = 80,
                     const FormatOptions& options = {});
-
-////////////////////////////////////////////////////////////
-/// \brief Create a horizontal line divider
-/// \param width The width of the divider (default: 80)
-/// \param options Format options for the divider
-/// \return Formatted horizontal line
-///
-////////////////////////////////////////////////////////////
-std::string horizontal_line(size_t width = 80,
-                           const FormatOptions& options = {});
-
-////////////////////////////////////////////////////////////
-/// \brief Create a double line divider
-/// \param width The width of the divider (default: 80)
-/// \param options Format options for the divider
-/// \return Formatted double line
-///
-////////////////////////////////////////////////////////////
-std::string double_line(size_t width = 80,
-                       const FormatOptions& options = {});
 
 ////////////////////////////////////////////////////////////
 /// \brief Escape and sanitize input string to prevent injection
@@ -128,7 +108,7 @@ std::string double_line(size_t width = 80,
 /// \return Sanitized string safe for terminal output
 ///
 ////////////////////////////////////////////////////////////
-std::string sanitize(std::string_view text);
+std::string Sanitize(std::string_view text);
 
 ////////////////////////////////////////////////////////////
 /// \brief Strip ANSI codes from a string
@@ -136,6 +116,6 @@ std::string sanitize(std::string_view text);
 /// \return Plain text without ANSI codes
 ///
 ////////////////////////////////////////////////////////////
-std::string strip_ansi(std::string_view text);
+std::string StripAnsi(std::string_view text);
 
 } // namespace conmat
