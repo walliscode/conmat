@@ -1,0 +1,141 @@
+#pragma once
+
+#include <string>
+#include <string_view>
+
+namespace conmat {
+
+////////////////////////////////////////////////////////////
+/// \brief ANSI color codes enum
+///
+////////////////////////////////////////////////////////////
+enum class Color {
+  Default,
+  Black,
+  Red,
+  Green,
+  Yellow,
+  Blue,
+  Magenta,
+  Cyan,
+  White,
+  BrightBlack,
+  BrightRed,
+  BrightGreen,
+  BrightYellow,
+  BrightBlue,
+  BrightMagenta,
+  BrightCyan,
+  BrightWhite
+};
+
+////////////////////////////////////////////////////////////
+/// \brief ANSI text style codes enum
+///
+////////////////////////////////////////////////////////////
+enum class Style {
+  Default,
+  Bold,
+  Dim,
+  Italic,
+  Underline,
+  Blink,
+  Reverse,
+  Hidden,
+  Strikethrough
+};
+
+////////////////////////////////////////////////////////////
+/// \brief Format options for text formatting
+///
+////////////////////////////////////////////////////////////
+struct FormatOptions {
+  Color foreground = Color::Default;
+  Color background = Color::Default;
+  Style style = Style::Default;
+  bool reset_after = true; // Automatically append reset sequence
+
+  FormatOptions() = default;
+  FormatOptions(Color fg) : foreground(fg) {}
+  FormatOptions(Color fg, Style s) : foreground(fg), style(s) {}
+  FormatOptions(Color fg, Color bg) : foreground(fg), background(bg) {}
+  FormatOptions(Color fg, Color bg, Style s) 
+    : foreground(fg), background(bg), style(s) {}
+};
+
+////////////////////////////////////////////////////////////
+/// \brief Format a string with ANSI codes
+/// \param text The text to format
+/// \param options Format options (default: no formatting)
+/// \return Formatted string with ANSI codes
+///
+////////////////////////////////////////////////////////////
+std::string format(std::string_view text, const FormatOptions& options = {});
+
+////////////////////////////////////////////////////////////
+/// \brief Format text with just a foreground color
+/// \param text The text to format
+/// \param color The foreground color
+/// \return Formatted string with color
+///
+////////////////////////////////////////////////////////////
+std::string colorize(std::string_view text, Color color);
+
+////////////////////////////////////////////////////////////
+/// \brief Format text with a style
+/// \param text The text to format
+/// \param style The text style
+/// \return Formatted string with style
+///
+////////////////////////////////////////////////////////////
+std::string stylize(std::string_view text, Style style);
+
+////////////////////////////////////////////////////////////
+/// \brief Create a divider line
+/// \param symbol The symbol to use (default: "=")
+/// \param width The width of the divider (default: 80)
+/// \param options Format options for the divider
+/// \return Formatted divider string
+///
+////////////////////////////////////////////////////////////
+std::string divider(std::string_view symbol = "=", 
+                    size_t width = 80,
+                    const FormatOptions& options = {});
+
+////////////////////////////////////////////////////////////
+/// \brief Create a horizontal line divider
+/// \param width The width of the divider (default: 80)
+/// \param options Format options for the divider
+/// \return Formatted horizontal line
+///
+////////////////////////////////////////////////////////////
+std::string horizontal_line(size_t width = 80,
+                           const FormatOptions& options = {});
+
+////////////////////////////////////////////////////////////
+/// \brief Create a double line divider
+/// \param width The width of the divider (default: 80)
+/// \param options Format options for the divider
+/// \return Formatted double line
+///
+////////////////////////////////////////////////////////////
+std::string double_line(size_t width = 80,
+                       const FormatOptions& options = {});
+
+////////////////////////////////////////////////////////////
+/// \brief Escape and sanitize input string to prevent injection
+/// \param text The text to sanitize
+/// \return Sanitized string safe for terminal output
+///
+////////////////////////////////////////////////////////////
+std::string sanitize(std::string_view text);
+
+////////////////////////////////////////////////////////////
+/// \brief Strip ANSI codes from a string
+/// \param text The text to strip codes from
+/// \return Plain text without ANSI codes
+///
+////////////////////////////////////////////////////////////
+std::string strip_ansi(std::string_view text);
+
+} // namespace conmat

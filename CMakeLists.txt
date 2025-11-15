@@ -1,9 +1,8 @@
 
 cmake_minimum_required(VERSION 3.31 FATAL_ERROR)
 
-# [TODO] Add Project Name
-project(
-  VERSION 0.0.0.0
+project(conmat
+  VERSION 0.1.0
   LANGUAGES CXX)
 
 enable_testing()
