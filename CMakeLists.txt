@@ -31,11 +31,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(PROJECT_IS_TOP_LEVEL)
   # set the cmake module path (for import libraries and other cmake files)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/fetch-content-modules")
-  
+
   # fetch_content_modules.cmake contains a menu list of all fetch content
   # scripts to include. to keep top level cmake tidier
   include(fetch-content-modules)
-  
+
   add_subdirectory(config)
 endif()
 

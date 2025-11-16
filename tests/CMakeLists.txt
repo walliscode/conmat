@@ -3,7 +3,7 @@ add_executable(test_conmat
   test_conmat.cpp
 )
 
-target_link_libraries(test_conmat PRIVATE
+target_link_libraries(test_conmat PUBLIC
   conmat::conmat
 )
 
