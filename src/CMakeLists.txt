@@ -16,8 +16,8 @@ target_include_directories(conmat PUBLIC
 # Require C++23
 target_compile_features(conmat PUBLIC cxx_std_23)
 
-# Only build demo if this is the main project
-if(CONMAT_IS_MAIN_PROJECT)
+# Only build demo if this is the top-level project
+if(PROJECT_IS_TOP_LEVEL)
   # Create a demo executable (not exported)
   add_executable(conmat_demo
     demo.cpp

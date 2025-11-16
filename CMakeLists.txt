@@ -7,15 +7,9 @@ project(conmat
   VERSION 0.1.0
   LANGUAGES CXX)
 
-# Determine if this is the main project or included via add_subdirectory/FetchContent
-if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-  set(CONMAT_IS_MAIN_PROJECT ON)
-else()
-  set(CONMAT_IS_MAIN_PROJECT OFF)
-endif()
-
-# Only enable testing and add test subdirectory if this is the main project
-if(CONMAT_IS_MAIN_PROJECT)
+# Only enable testing and add test subdirectory if this is the top-level project
+# PROJECT_IS_TOP_LEVEL is a built-in CMake variable available since CMake 3.21
+if(PROJECT_IS_TOP_LEVEL)
   enable_testing()
 endif()
 
@@ -33,8 +27,8 @@ endif()
 # Always enforce the language constraint
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Only add fetch content modules if this is the main project
-if(CONMAT_IS_MAIN_PROJECT)
+# Only add fetch content modules if this is the top-level project
+if(PROJECT_IS_TOP_LEVEL)
   # set the cmake module path (for import libraries and other cmake files)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/fetch-content-modules")
   
@@ -48,8 +42,8 @@ endif()
 # Always add the main library
 add_subdirectory(src)
 
-# Only add tests and demo when this is the main project
-if(CONMAT_IS_MAIN_PROJECT)
+# Only add tests and demo when this is the top-level project
+if(PROJECT_IS_TOP_LEVEL)
   add_subdirectory(tests)
 endif()
 
