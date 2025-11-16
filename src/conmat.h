@@ -59,8 +59,8 @@ struct FormatOptions {
   FormatOptions(Color fg) : foreground(fg) {}
   FormatOptions(Color fg, Style s) : foreground(fg), style(s) {}
   FormatOptions(Color fg, Color bg) : foreground(fg), background(bg) {}
-  FormatOptions(Color fg, Color bg, Style s) 
-    : foreground(fg), background(bg), style(s) {}
+  FormatOptions(Color fg, Color bg, Style s)
+      : foreground(fg), background(bg), style(s) {}
 };
 
 ////////////////////////////////////////////////////////////
@@ -70,7 +70,7 @@ struct FormatOptions {
 /// \return Formatted string with ANSI codes
 ///
 ////////////////////////////////////////////////////////////
-std::string Format(std::string_view text, const FormatOptions& options = {});
+std::string Format(std::string_view text, const FormatOptions &options = {});
 
 ////////////////////////////////////////////////////////////
 /// \brief Format text with just a foreground color
@@ -98,9 +98,8 @@ std::string Stylize(std::string_view text, Style style);
 /// \return Formatted divider string
 ///
 ////////////////////////////////////////////////////////////
-std::string Divider(std::string_view symbol = "=", 
-                    size_t width = 80,
-                    const FormatOptions& options = {});
+std::string Divider(std::string_view symbol = "=", size_t width = 80,
+                    const FormatOptions &options = {});
 
 ////////////////////////////////////////////////////////////
 /// \brief Escape and sanitize input string to prevent injection
@@ -117,5 +116,20 @@ std::string Sanitize(std::string_view text);
 ///
 ////////////////////////////////////////////////////////////
 std::string StripAnsi(std::string_view text);
+
+/////////////////////////////////////////////////
+/// @brief Return a yellow progress dots
+/////////////////////////////////////////////////
+std::string TestInProgress();
+
+/////////////////////////////////////////////////
+/// @brief Return a green check mark symbol
+/////////////////////////////////////////////////
+std::string TestPassed();
+
+/////////////////////////////////////////////////
+/// @brief Return a red cross mark symbol
+/////////////////////////////////////////////////
+std::string TestFailed();
 
 } // namespace conmat
