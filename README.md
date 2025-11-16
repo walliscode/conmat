@@ -69,18 +69,29 @@ std::cout << Format("White on blue", with_bg) << std::endl;
 ### Dividers
 
 ```cpp
-// Default divider (80 '=' characters)
+// Default divider (80 characters using CMake-configured default symbol)
 std::cout << Divider() << std::endl;
 
-// Custom symbol and width
+// Custom width with default symbol
+std::cout << Divider(40) << std::endl;
+
+// Custom symbol and width (runtime override)
 std::cout << Divider("-", 40) << std::endl;
 std::cout << Divider("*", 50) << std::endl;
-std::cout << double_line(80) << std::endl;      // Uses '='
 
 // Colored dividers
 FormatOptions cyan(Color::Cyan);
 std::cout << Divider("=", 80, cyan) << std::endl;
 ```
+
+**CMake Configuration**: The default symbol can be configured at compile time:
+
+```bash
+# Configure with custom default divider symbol
+cmake -DCONMAT_DEFAULT_DIVIDER_SYMBOL="-" ...
+```
+
+The default symbol is "=" if not specified. Runtime calls can always override this default.
 
 ### String Safety
 
@@ -104,9 +115,14 @@ std::string plain = StripAnsi(Colorize("colored", Color::Red));
 - `Format(text, options)` - Format text with full options
 - `Colorize(text, color)` - Apply foreground color
 - `Stylize(text, style)` - Apply text style
-- `Divider(symbol, width, options)` - Create divider line with custom symbol (default "=")
+- `Divider(symbol, width, options)` - Create divider line with custom symbol (runtime override)
+- `Divider(width, options)` - Create divider line with CMake-configured default symbol
 - `Sanitize(text)` - Remove control characters
 - `StripAnsi(text)` - Remove ANSI escape codes
+
+### CMake Options
+
+- `CONMAT_DEFAULT_DIVIDER_SYMBOL` - Configure the default symbol for Divider function (default: "=")
 
 ### FormatOptions
 
