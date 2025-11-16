@@ -126,9 +126,14 @@ void test_empty_divider() {
 void test_default_divider() {
   using namespace conmat;
   
+  // Test that default divider has correct length (80)
+  // The symbol is configurable via CMake, so we don't check for a specific symbol
   std::string div = Divider();
   assert(div.length() == 80);
-  assert(div == "================================================================================");
+  
+  // Test with a specific width
+  std::string div_40 = Divider(40);
+  assert(div_40.length() == 40);
   
   std::cout << "✓ Default divider test passed" << std::endl;
 }
