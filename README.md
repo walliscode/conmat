@@ -121,11 +121,31 @@ struct FormatOptions {
 
 ## Integration
 
+### Using CMake FetchContent (Recommended)
+
 Add to your CMakeLists.txt:
 
 ```cmake
+include(FetchContent)
+
+FetchContent_Declare(
+  conmat
+  GIT_REPOSITORY https://github.com/walliscode/conmat.git
+  GIT_TAG main  # or specify a tag/commit
+)
+
+FetchContent_MakeAvailable(conmat)
+
+target_link_libraries(your_target PRIVATE conmat::conmat)
+```
+
+### Using add_subdirectory
+
+If you have conmat as a subdirectory in your project:
+
+```cmake
 add_subdirectory(path/to/conmat)
-target_link_libraries(your_target PRIVATE conmat)
+target_link_libraries(your_target PRIVATE conmat::conmat)
 ```
 
 ## Design Principles

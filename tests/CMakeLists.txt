@@ -4,7 +4,7 @@ add_executable(test_conmat
 )
 
 target_link_libraries(test_conmat PRIVATE
-  conmat
+  conmat::conmat
 )
 
 # Add test to CTest
