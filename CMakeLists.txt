@@ -5,11 +5,21 @@ project(conmat
   VERSION 0.1.0
   LANGUAGES CXX)
 
-enable_testing()
+# Determine if this is the main project or included via add_subdirectory/FetchContent
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  set(CONMAT_IS_MAIN_PROJECT ON)
+else()
+  set(CONMAT_IS_MAIN_PROJECT OFF)
+endif()
+
+# Only enable testing and add test subdirectory if this is the main project
+if(CONMAT_IS_MAIN_PROJECT)
+  enable_testing()
+endif()
 
 # This next bit of code comes from Professional CMake: A Practical Guide,
 # pg 205 (in documentation/textbooks) as a safe way to add CXX standards
-# Require C++20, but let a parent project ask for something higher
+# Require C++23, but let a parent project ask for something higher
 if(DEFINED CMAKE_CXX_STANDARD)
   if(CMAKE_CXX_STANDARD MATCHES "^(90|99)$" OR CMAKE_CXX_STANDARD LESS 23)
     message(FATAL_ERROR "This project requires at least C++23")
@@ -21,18 +31,25 @@ endif()
 # Always enforce the language constraint
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Only add fetch content modules if this is the main project
+if(CONMAT_IS_MAIN_PROJECT)
+  # set the cmake module path (for import libraries and other cmake files)
+  list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/fetch-content-modules")
+  
+  # fetch_content_modules.cmake contains a menu list of all fetch content
+  # scripts to include. to keep top level cmake tidier
+  include(fetch-content-modules)
+  
+  add_subdirectory(config)
+endif()
 
-# set the cmake module path (for import libraries and other cmake files)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/fetch-content-modules")
-
-
-# fetch_content_modules.cmake contains a menu list of all fetch content
-# scripts to include. to keep top level cmake tidier
-include(fetch-content-modules)
-
-add_subdirectory(config)
+# Always add the main library
 add_subdirectory(src)
-add_subdirectory(tests)
+
+# Only add tests and demo when this is the main project
+if(CONMAT_IS_MAIN_PROJECT)
+  add_subdirectory(tests)
+endif()
 
 
 
