@@ -1,4 +1,6 @@
 
+# CMake 3.31 is the latest stable version at the time of this update
+# This uses modern CMake practices and is forward-compatible with CMake 4.x
 cmake_minimum_required(VERSION 3.31 FATAL_ERROR)
 
 project(conmat
