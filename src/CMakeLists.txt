@@ -1,5 +1,5 @@
 # CMake option for default divider symbol
-set(CONMAT_DEFAULT_DIVIDER_SYMBOL "=" CACHE STRING "Default symbol for Divider function")
+set(CONMAT_DEFAULT_DIVIDER_SYMBOL "=")
 
 # Configure the config header
 configure_file(
