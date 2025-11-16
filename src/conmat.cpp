@@ -1,4 +1,5 @@
 #include "conmat.h"
+#include "conmat_config.h"
 #include <regex>
 #include <sstream>
 
@@ -187,6 +188,11 @@ std::string Divider(std::string_view symbol, size_t width,
   }
 
   return result.str();
+}
+
+std::string Divider(size_t width, const FormatOptions &options) {
+  // Use the compile-time configured default symbol
+  return Divider(CONMAT_DEFAULT_DIVIDER_SYMBOL, width, options);
 }
 
 std::string Sanitize(std::string_view text) {

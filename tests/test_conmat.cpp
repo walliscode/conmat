@@ -126,11 +126,34 @@ void test_empty_divider() {
 void test_default_divider() {
   using namespace conmat;
   
+  // Test that default divider has correct length (80)
+  // The symbol is configurable via CMake, so we don't check for a specific symbol
   std::string div = Divider();
   assert(div.length() == 80);
-  assert(div == "================================================================================");
+  
+  // Test with a specific width
+  std::string div_40 = Divider(40);
+  assert(div_40.length() == 40);
   
   std::cout << "✓ Default divider test passed" << std::endl;
+}
+
+void test_divider_runtime_override() {
+  using namespace conmat;
+  
+  // Test that explicit symbol overrides the default
+  std::string custom = Divider("-", 10);
+  assert(custom == "----------");
+  
+  // Test with different symbols
+  std::string stars = Divider("*", 5);
+  assert(stars == "*****");
+  
+  // Test that parameterless call uses default (configured via CMake)
+  std::string default_div = Divider(10);
+  assert(default_div.length() == 10);
+  
+  std::cout << "✓ Divider runtime override test passed" << std::endl;
 }
 
 int main() {
@@ -146,6 +169,7 @@ int main() {
   test_no_reset();
   test_empty_divider();
   test_default_divider();
+  test_divider_runtime_override();
   
   std::cout << std::endl << "All tests passed! ✓" << std::endl;
   

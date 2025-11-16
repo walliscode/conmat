@@ -1,3 +1,13 @@
+# CMake option for default divider symbol
+set(CONMAT_DEFAULT_DIVIDER_SYMBOL "=")
+
+# Configure the config header
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/conmat_config.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/conmat_config.h"
+  @ONLY
+)
+
 # Create the conmat library
 add_library(conmat STATIC
   conmat.cpp
@@ -10,6 +20,7 @@ add_library(conmat::conmat ALIAS conmat)
 # Use generator expressions for better FetchContent compatibility
 target_include_directories(conmat PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>
 )
 

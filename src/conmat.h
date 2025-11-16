@@ -91,15 +91,24 @@ std::string Colorize(std::string_view text, Color color);
 std::string Stylize(std::string_view text, Style style);
 
 ////////////////////////////////////////////////////////////
-/// \brief Create a divider line
-/// \param symbol The symbol to use (default: "=")
+/// \brief Create a divider line with explicit symbol
+/// \param symbol The symbol to use
 /// \param width The width of the divider (default: 80)
 /// \param options Format options for the divider
 /// \return Formatted divider string
 ///
 ////////////////////////////////////////////////////////////
-std::string Divider(std::string_view symbol = "=", size_t width = 80,
+std::string Divider(std::string_view symbol, size_t width = 80,
                     const FormatOptions &options = {});
+
+////////////////////////////////////////////////////////////
+/// \brief Create a divider line with default symbol from CMake configuration
+/// \param width The width of the divider (default: 80)
+/// \param options Format options for the divider
+/// \return Formatted divider string
+///
+////////////////////////////////////////////////////////////
+std::string Divider(size_t width = 80, const FormatOptions &options = {});
 
 ////////////////////////////////////////////////////////////
 /// \brief Escape and sanitize input string to prevent injection
