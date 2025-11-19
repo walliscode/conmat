@@ -18,8 +18,7 @@ concept Streamable = requires(std::ostream &os, T value) {
 
 namespace detail {
 /// \brief Convert any streamable type to string
-template <Streamable T>
-std::string to_string(const T &value) {
+template <Streamable T> std::string to_string(const T &value) {
   if constexpr (std::is_same_v<T, std::string> ||
                 std::is_same_v<T, std::string_view> ||
                 std::is_same_v<T, const char *>) {
@@ -97,7 +96,8 @@ struct FormatOptions {
 /// \return Formatted string with ANSI codes
 ///
 ////////////////////////////////////////////////////////////
-std::string FormatImpl(std::string_view text, const FormatOptions &options = {});
+std::string FormatImpl(std::string_view text,
+                       const FormatOptions &options = {});
 
 ////////////////////////////////////////////////////////////
 /// \brief Format any streamable value with ANSI codes
@@ -118,8 +118,7 @@ std::string Format(const T &value, const FormatOptions &options = {}) {
 /// \return Formatted string with color
 ///
 ////////////////////////////////////////////////////////////
-template <Streamable T>
-std::string Colorize(const T &value, Color color) {
+template <Streamable T> std::string Colorize(const T &value, Color color) {
   FormatOptions options;
   options.foreground = color;
   return FormatImpl(detail::to_string(value), options);
@@ -132,8 +131,7 @@ std::string Colorize(const T &value, Color color) {
 /// \return Formatted string with style
 ///
 ////////////////////////////////////////////////////////////
-template <Streamable T>
-std::string Stylize(const T &value, Style style) {
+template <Streamable T> std::string Stylize(const T &value, Style style) {
   FormatOptions options;
   options.style = style;
   return FormatImpl(detail::to_string(value), options);
