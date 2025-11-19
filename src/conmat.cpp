@@ -119,7 +119,7 @@ std::string get_style_code(Style style) {
 
 } // anonymous namespace
 
-std::string Format(std::string_view text, const FormatOptions &options) {
+std::string FormatImpl(std::string_view text, const FormatOptions &options) {
   // Sanitize input first
   std::string safe_text = Sanitize(text);
 
@@ -145,17 +145,6 @@ std::string Format(std::string_view text, const FormatOptions &options) {
   return result.str();
 }
 
-std::string Colorize(std::string_view text, Color color) {
-  FormatOptions options;
-  options.foreground = color;
-  return Format(text, options);
-}
-
-std::string Stylize(std::string_view text, Style style) {
-  FormatOptions options;
-  options.style = style;
-  return Format(text, options);
-}
 
 std::string Divider(std::string_view symbol, size_t width,
                     const FormatOptions &options) {
@@ -184,7 +173,7 @@ std::string Divider(std::string_view symbol, size_t width,
   // Apply formatting if any
   if (options.foreground != Color::Default ||
       options.background != Color::Default || options.style != Style::Default) {
-    return Format(result.str(), options);
+    return FormatImpl(result.str(), options);
   }
 
   return result.str();

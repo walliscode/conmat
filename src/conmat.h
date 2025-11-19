@@ -1,9 +1,35 @@
 #pragma once
 
+#include <concepts>
+#include <sstream>
 #include <string>
 #include <string_view>
 
 namespace conmat {
+
+////////////////////////////////////////////////////////////
+/// \brief Concept for types that can be streamed to ostream
+///
+////////////////////////////////////////////////////////////
+template <typename T>
+concept Streamable = requires(std::ostream &os, T value) {
+  { os << value } -> std::same_as<std::ostream &>;
+};
+
+namespace detail {
+/// \brief Convert any streamable type to string
+template <Streamable T> std::string to_string(const T &value) {
+  if constexpr (std::is_same_v<T, std::string> ||
+                std::is_same_v<T, std::string_view> ||
+                std::is_same_v<T, const char *>) {
+    return std::string(value);
+  } else {
+    std::ostringstream oss;
+    oss << value;
+    return oss.str();
+  }
+}
+} // namespace detail
 
 ////////////////////////////////////////////////////////////
 /// \brief ANSI color codes enum
@@ -64,31 +90,52 @@ struct FormatOptions {
 };
 
 ////////////////////////////////////////////////////////////
-/// \brief Format a string with ANSI codes
+/// \brief Format a string with ANSI codes (internal implementation)
 /// \param text The text to format
 /// \param options Format options (default: no formatting)
 /// \return Formatted string with ANSI codes
 ///
 ////////////////////////////////////////////////////////////
-std::string Format(std::string_view text, const FormatOptions &options = {});
+std::string FormatImpl(std::string_view text,
+                       const FormatOptions &options = {});
 
 ////////////////////////////////////////////////////////////
-/// \brief Format text with just a foreground color
-/// \param text The text to format
+/// \brief Format any streamable value with ANSI codes
+/// \param value The value to format (can be any type streamable to cout)
+/// \param options Format options (default: no formatting)
+/// \return Formatted string with ANSI codes
+///
+////////////////////////////////////////////////////////////
+template <Streamable T>
+std::string Format(const T &value, const FormatOptions &options = {}) {
+  return FormatImpl(detail::to_string(value), options);
+}
+
+////////////////////////////////////////////////////////////
+/// \brief Format any streamable value with just a foreground color
+/// \param value The value to format (can be any type streamable to cout)
 /// \param color The foreground color
 /// \return Formatted string with color
 ///
 ////////////////////////////////////////////////////////////
-std::string Colorize(std::string_view text, Color color);
+template <Streamable T> std::string Colorize(const T &value, Color color) {
+  FormatOptions options;
+  options.foreground = color;
+  return FormatImpl(detail::to_string(value), options);
+}
 
 ////////////////////////////////////////////////////////////
-/// \brief Format text with a style
-/// \param text The text to format
+/// \brief Format any streamable value with a style
+/// \param value The value to format (can be any type streamable to cout)
 /// \param style The text style
 /// \return Formatted string with style
 ///
 ////////////////////////////////////////////////////////////
-std::string Stylize(std::string_view text, Style style);
+template <Streamable T> std::string Stylize(const T &value, Style style) {
+  FormatOptions options;
+  options.style = style;
+  return FormatImpl(detail::to_string(value), options);
+}
 
 ////////////////////////////////////////////////////////////
 /// \brief Create a divider line with explicit symbol

@@ -16,6 +16,13 @@ int main() {
   std::cout << Colorize("Cyan text", Color::Cyan) << std::endl;
   std::cout << std::endl;
 
+  bool flag = true;
+  // Colorize different data types
+  std::cout << "Colorized Different Data Types:" << std::endl;
+  std::cout << Colorize(12345, Color::BrightGreen) << std::endl;
+  std::cout << Colorize(3.14159, Color::BrightCyan) << std::endl;
+  std::cout << Colorize(flag, Color::BrightYellow) << std::endl;
+  std::cout << std::endl;
   // Test bright colors
   std::cout << "Bright Colors:" << std::endl;
   std::cout << Colorize("Bright Red", Color::BrightRed) << std::endl;
