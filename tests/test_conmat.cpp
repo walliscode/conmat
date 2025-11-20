@@ -257,6 +257,123 @@ void test_mixed_string_and_numeric() {
   std::cout << "✓ Mixed string and numeric test passed" << std::endl;
 }
 
+void test_indent_default() {
+  using namespace conmat;
+  
+  // Test default indentation (2 spaces)
+  std::string result = Indent("test");
+  assert(result == "  test");
+  
+  // Test that it actually has 2 spaces
+  assert(result.length() == 6); // 2 spaces + 4 chars
+  assert(result[0] == ' ');
+  assert(result[1] == ' ');
+  assert(result.substr(2) == "test");
+  
+  std::cout << "✓ Indent default test passed" << std::endl;
+}
+
+void test_indent_custom_spaces() {
+  using namespace conmat;
+  
+  // Test with 4 spaces
+  std::string result4 = Indent("test", 4);
+  assert(result4 == "    test");
+  assert(result4.length() == 8);
+  
+  // Test with 0 spaces
+  std::string result0 = Indent("test", 0);
+  assert(result0 == "test");
+  
+  // Test with 1 space
+  std::string result1 = Indent("test", 1);
+  assert(result1 == " test");
+  
+  // Test with 8 spaces
+  std::string result8 = Indent("test", 8);
+  assert(result8 == "        test");
+  assert(result8.length() == 12);
+  
+  std::cout << "✓ Indent custom spaces test passed" << std::endl;
+}
+
+void test_indent_with_formatting() {
+  using namespace conmat;
+  
+  // Test with color formatting
+  FormatOptions red_opts(Color::Red);
+  std::string red_result = Indent("test", 2, red_opts);
+  assert(red_result.find("\033[31m") != std::string::npos);
+  assert(red_result.find("  test") != std::string::npos);
+  assert(red_result.find("\033[0m") != std::string::npos);
+  
+  // Test with style formatting
+  FormatOptions bold_opts(Color::Default, Style::Bold);
+  std::string bold_result = Indent("test", 4, bold_opts);
+  assert(bold_result.find("\033[1m") != std::string::npos);
+  assert(bold_result.find("    test") != std::string::npos);
+  
+  // Test with combined formatting
+  FormatOptions combo_opts(Color::Green, Color::Blue, Style::Bold);
+  std::string combo_result = Indent("test", 2, combo_opts);
+  assert(combo_result.find("\033[1m") != std::string::npos);
+  assert(combo_result.find("\033[32m") != std::string::npos);
+  assert(combo_result.find("\033[44m") != std::string::npos);
+  
+  std::cout << "✓ Indent with formatting test passed" << std::endl;
+}
+
+void test_indent_with_numeric_types() {
+  using namespace conmat;
+  
+  // Test with integer
+  std::string int_result = Indent(42);
+  assert(int_result == "  42");
+  
+  // Test with double
+  std::string double_result = Indent(3.14, 4);
+  assert(double_result == "    3.14");
+  
+  // Test with boolean
+  std::string bool_result = Indent(true, 2);
+  assert(bool_result == "  1");
+  
+  // Test with negative number
+  std::string neg_result = Indent(-100, 3);
+  assert(neg_result == "   -100");
+  
+  std::cout << "✓ Indent with numeric types test passed" << std::endl;
+}
+
+void test_indent_with_special_chars() {
+  using namespace conmat;
+  
+  // Test with newline (should be preserved)
+  std::string newline_result = Indent("hello\nworld", 2);
+  assert(newline_result.find("  hello\nworld") != std::string::npos);
+  assert(newline_result[0] == ' ');
+  assert(newline_result[1] == ' ');
+  
+  // Test with tab (should be preserved)
+  std::string tab_result = Indent("hello\tworld", 2);
+  assert(tab_result.find("\t") != std::string::npos);
+  
+  std::cout << "✓ Indent with special chars test passed" << std::endl;
+}
+
+void test_indent_sanitization() {
+  using namespace conmat;
+  
+  // Test that control characters are sanitized
+  std::string unsafe = "hello\x1b[31mworld";
+  std::string result = Indent(unsafe, 2);
+  assert(result.find('\x1b') == std::string::npos);
+  assert(result.find("  hello") != std::string::npos);
+  assert(result.find("world") != std::string::npos);
+  
+  std::cout << "✓ Indent sanitization test passed" << std::endl;
+}
+
 int main() {
   std::cout << "Running conmat tests..." << std::endl << std::endl;
   
@@ -276,6 +393,12 @@ int main() {
   test_stylize_with_numeric_types();
   test_format_with_numeric_types();
   test_mixed_string_and_numeric();
+  test_indent_default();
+  test_indent_custom_spaces();
+  test_indent_with_formatting();
+  test_indent_with_numeric_types();
+  test_indent_with_special_chars();
+  test_indent_sanitization();
   
   std::cout << std::endl << "All tests passed! ✓" << std::endl;
   

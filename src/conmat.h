@@ -188,4 +188,29 @@ std::string TestPassed();
 /////////////////////////////////////////////////
 std::string TestFailed();
 
+////////////////////////////////////////////////////////////
+/// \brief Indent text with a specified number of spaces (internal implementation)
+/// \param text The text to indent
+/// \param spaces Number of spaces to indent (default: 2)
+/// \param options Format options for the indented text
+/// \return Indented string
+///
+////////////////////////////////////////////////////////////
+std::string IndentImpl(std::string_view text, size_t spaces = 2,
+                       const FormatOptions &options = {});
+
+////////////////////////////////////////////////////////////
+/// \brief Indent any streamable value with a specified number of spaces
+/// \param value The value to indent (can be any type streamable to cout)
+/// \param spaces Number of spaces to indent (default: 2)
+/// \param options Format options for the indented text
+/// \return Indented string
+///
+////////////////////////////////////////////////////////////
+template <Streamable T>
+std::string Indent(const T &value, size_t spaces = 2,
+                   const FormatOptions &options = {}) {
+  return IndentImpl(detail::to_string(value), spaces, options);
+}
+
 } // namespace conmat

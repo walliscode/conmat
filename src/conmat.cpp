@@ -219,4 +219,25 @@ std::string TestInProgress() { return Colorize("[...]", Color::Yellow); }
 std::string TestPassed() { return Colorize("[✓]", Color::Green); }
 
 std::string TestFailed() { return Colorize("[✗]", Color::Red); }
+
+std::string IndentImpl(std::string_view text, size_t spaces,
+                       const FormatOptions &options) {
+  // Create the indent string
+  std::string indent(spaces, ' ');
+  
+  // Sanitize input first
+  std::string safe_text = Sanitize(text);
+  
+  // Build result with indentation
+  std::ostringstream result;
+  result << indent << safe_text;
+  
+  // Apply formatting if any
+  if (options.foreground != Color::Default ||
+      options.background != Color::Default || options.style != Style::Default) {
+    return FormatImpl(result.str(), options);
+  }
+  
+  return result.str();
+}
 } // namespace conmat

@@ -83,6 +83,25 @@ int main() {
   std::cout << "Stripped: " << StripAnsi(with_ansi) << std::endl;
   std::cout << std::endl;
 
+  // Test indentation
+  std::cout << "Indentation:" << std::endl;
+  std::cout << Indent("Default indent (2 spaces)") << std::endl;
+  std::cout << Indent("4 spaces indent", 4) << std::endl;
+  std::cout << Indent("8 spaces indent", 8) << std::endl;
+  
+  // Indented with color
+  FormatOptions red_indent(Color::Red);
+  std::cout << Indent("Red indented text", 2, red_indent) << std::endl;
+  
+  // Indented with style
+  FormatOptions bold_indent(Color::Default, Style::Bold);
+  std::cout << Indent("Bold indented text", 4, bold_indent) << std::endl;
+  
+  // Indented numbers
+  std::cout << Indent(12345, 2) << std::endl;
+  std::cout << Indent(3.14159, 4) << std::endl;
+  std::cout << std::endl;
+
   std::cout << Format("Demo completed successfully!",
                       FormatOptions(Color::Green, Style::Bold))
             << std::endl;
