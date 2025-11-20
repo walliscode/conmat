@@ -93,6 +93,25 @@ cmake -DCONMAT_DEFAULT_DIVIDER_SYMBOL="-" ...
 
 The default symbol is "=" if not specified. Runtime calls can always override this default.
 
+### Indentation
+
+```cpp
+// Default indentation (2 spaces)
+std::cout << Indent("This is indented") << std::endl;
+
+// Custom indentation
+std::cout << Indent("4 spaces", 4) << std::endl;
+std::cout << Indent("8 spaces", 8) << std::endl;
+
+// Indentation with colors
+FormatOptions red(Color::Red);
+std::cout << Indent("Red indented text", 2, red) << std::endl;
+
+// Works with any streamable type
+std::cout << Indent(42, 4) << std::endl;
+std::cout << Indent(3.14, 2) << std::endl;
+```
+
 ### String Safety
 
 ```cpp
@@ -115,6 +134,7 @@ std::string plain = StripAnsi(Colorize("colored", Color::Red));
 - `Format(text, options)` - Format text with full options
 - `Colorize(text, color)` - Apply foreground color
 - `Stylize(text, style)` - Apply text style
+- `Indent(text, spaces, options)` - Indent text with specified number of spaces (default: 2)
 - `Divider(symbol, width, options)` - Create divider line with custom symbol (runtime override)
 - `Divider(width, options)` - Create divider line with CMake-configured default symbol
 - `Sanitize(text)` - Remove control characters
