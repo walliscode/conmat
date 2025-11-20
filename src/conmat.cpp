@@ -225,19 +225,17 @@ std::string IndentImpl(std::string_view text, size_t spaces,
   // Create the indent string
   std::string indent(spaces, ' ');
   
-  // Sanitize input first
-  std::string safe_text = Sanitize(text);
-  
   // Build result with indentation
   std::ostringstream result;
-  result << indent << safe_text;
+  result << indent << text;
   
-  // Apply formatting if any
+  // Apply formatting if any (FormatImpl will sanitize)
   if (options.foreground != Color::Default ||
       options.background != Color::Default || options.style != Style::Default) {
     return FormatImpl(result.str(), options);
   }
   
-  return result.str();
+  // No formatting, so we need to sanitize ourselves
+  return Sanitize(result.str());
 }
 } // namespace conmat
