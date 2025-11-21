@@ -257,6 +257,74 @@ void test_mixed_string_and_numeric() {
   std::cout << "✓ Mixed string and numeric test passed" << std::endl;
 }
 
+void test_indent_default() {
+  using namespace conmat;
+  
+  // Test level 0 (no indentation)
+  std::string result0 = Indent(0);
+  assert(result0 == "");
+  assert(result0.length() == 0);
+  
+  // Test level 1 with default 2 spaces per level
+  std::string result1 = Indent(1);
+  assert(result1 == "  ");
+  assert(result1.length() == 2);
+  
+  // Test level 2 with default 2 spaces per level
+  std::string result2 = Indent(2);
+  assert(result2 == "    ");
+  assert(result2.length() == 4);
+  
+  std::cout << "✓ Indent default test passed" << std::endl;
+}
+
+void test_indent_custom_spaces() {
+  using namespace conmat;
+  
+  // Test level 1 with 4 spaces per level
+  std::string result1_4 = Indent(1, 4);
+  assert(result1_4 == "    ");
+  assert(result1_4.length() == 4);
+  
+  // Test level 2 with 4 spaces per level
+  std::string result2_4 = Indent(2, 4);
+  assert(result2_4 == "        ");
+  assert(result2_4.length() == 8);
+  
+  // Test level 3 with 2 spaces per level
+  std::string result3_2 = Indent(3, 2);
+  assert(result3_2 == "      ");
+  assert(result3_2.length() == 6);
+  
+  // Test level 1 with 1 space per level
+  std::string result1_1 = Indent(1, 1);
+  assert(result1_1 == " ");
+  assert(result1_1.length() == 1);
+  
+  std::cout << "✓ Indent custom spaces test passed" << std::endl;
+}
+
+void test_indent_usage() {
+  using namespace conmat;
+  
+  // Test that Indent() can be used with cout
+  std::string output0 = Indent(0) + "Root level";
+  assert(output0 == "Root level");
+  
+  std::string output1 = Indent(1) + "First level";
+  assert(output1 == "  First level");
+  
+  std::string output2 = Indent(2) + "Second level";
+  assert(output2 == "    Second level");
+  
+  // Test concatenation with formatted text
+  std::string output_colored = Indent(1) + Colorize("colored", Color::Red);
+  assert(output_colored.find("  ") == 0);
+  assert(output_colored.find("\033[31m") != std::string::npos);
+  
+  std::cout << "✓ Indent usage test passed" << std::endl;
+}
+
 int main() {
   std::cout << "Running conmat tests..." << std::endl << std::endl;
   
@@ -276,6 +344,9 @@ int main() {
   test_stylize_with_numeric_types();
   test_format_with_numeric_types();
   test_mixed_string_and_numeric();
+  test_indent_default();
+  test_indent_custom_spaces();
+  test_indent_usage();
   
   std::cout << std::endl << "All tests passed! ✓" << std::endl;
   

@@ -188,4 +188,22 @@ std::string TestPassed();
 /////////////////////////////////////////////////
 std::string TestFailed();
 
+////////////////////////////////////////////////////////////
+/// \brief Generate indentation string for given level
+///
+/// Creates a string of spaces for the specified indentation level.
+/// Each level adds spaces_per_level spaces to the output.
+///
+/// \param level Indentation level (0 = no indent, 1 = one level, etc.)
+/// \param spaces_per_level Number of spaces per indentation level (default: 2)
+/// \return String containing appropriate number of spaces
+///
+/// \example
+/// std::string indent = Indent(0);  // "" (no spaces)
+/// std::string indent = Indent(1);  // "  " (2 spaces)
+/// std::string indent = Indent(2);  // "    " (4 spaces)
+///
+////////////////////////////////////////////////////////////
+std::string Indent(size_t level, size_t spaces_per_level = 2);
+
 } // namespace conmat

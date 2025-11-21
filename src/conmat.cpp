@@ -219,4 +219,8 @@ std::string TestInProgress() { return Colorize("[...]", Color::Yellow); }
 std::string TestPassed() { return Colorize("[✓]", Color::Green); }
 
 std::string TestFailed() { return Colorize("[✗]", Color::Red); }
+
+std::string Indent(size_t level, size_t spaces_per_level) {
+  return std::string(level * spaces_per_level, ' ');
+}
 } // namespace conmat

@@ -83,6 +83,28 @@ int main() {
   std::cout << "Stripped: " << StripAnsi(with_ansi) << std::endl;
   std::cout << std::endl;
 
+  // Test indentation with levels
+  std::cout << "Indentation (level-based):" << std::endl;
+  std::cout << Indent(0) << "Level 0 (no indent)" << std::endl;
+  std::cout << Indent(1) << "Level 1 (2 spaces)" << std::endl;
+  std::cout << Indent(2) << "Level 2 (4 spaces)" << std::endl;
+  std::cout << Indent(3) << "Level 3 (6 spaces)" << std::endl;
+  
+  // Indentation with custom spaces per level
+  std::cout << Indent(1, 4) << "Level 1 with 4 spaces per level" << std::endl;
+  std::cout << Indent(2, 4) << "Level 2 with 4 spaces per level" << std::endl;
+  
+  // Indented with color
+  std::cout << Indent(1) << Colorize("Red indented text", Color::Red) << std::endl;
+  
+  // Indented with style
+  std::cout << Indent(2) << Stylize("Bold indented text", Style::Bold) << std::endl;
+  
+  // Indented numbers
+  std::cout << Indent(1) << 12345 << std::endl;
+  std::cout << Indent(2) << 3.14159 << std::endl;
+  std::cout << std::endl;
+
   std::cout << Format("Demo completed successfully!",
                       FormatOptions(Color::Green, Style::Bold))
             << std::endl;

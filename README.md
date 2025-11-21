@@ -93,6 +93,27 @@ cmake -DCONMAT_DEFAULT_DIVIDER_SYMBOL="-" ...
 
 The default symbol is "=" if not specified. Runtime calls can always override this default.
 
+### Indentation
+
+```cpp
+// Level-based indentation (default: 2 spaces per level)
+std::cout << Indent(0) << "No indent" << std::endl;
+std::cout << Indent(1) << "One level (2 spaces)" << std::endl;
+std::cout << Indent(2) << "Two levels (4 spaces)" << std::endl;
+
+// Custom spaces per level
+std::cout << Indent(1, 4) << "One level (4 spaces)" << std::endl;
+std::cout << Indent(2, 4) << "Two levels (8 spaces)" << std::endl;
+
+// Combine with other formatting
+std::cout << Indent(1) << Colorize("Red text", Color::Red) << std::endl;
+std::cout << Indent(2) << Stylize("Bold text", Style::Bold) << std::endl;
+
+// Works with any output
+std::cout << Indent(1) << 42 << std::endl;
+std::cout << Indent(2) << 3.14 << std::endl;
+```
+
 ### String Safety
 
 ```cpp
@@ -115,6 +136,7 @@ std::string plain = StripAnsi(Colorize("colored", Color::Red));
 - `Format(text, options)` - Format text with full options
 - `Colorize(text, color)` - Apply foreground color
 - `Stylize(text, style)` - Apply text style
+- `Indent(level, spaces_per_level)` - Generate indentation for given level (default: 2 spaces per level)
 - `Divider(symbol, width, options)` - Create divider line with custom symbol (runtime override)
 - `Divider(width, options)` - Create divider line with CMake-configured default symbol
 - `Sanitize(text)` - Remove control characters
