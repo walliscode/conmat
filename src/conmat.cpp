@@ -145,7 +145,6 @@ std::string FormatImpl(std::string_view text, const FormatOptions &options) {
   return result.str();
 }
 
-
 std::string Divider(std::string_view symbol, size_t width,
                     const FormatOptions &options) {
   if (symbol.empty() || width == 0) {
@@ -224,11 +223,9 @@ std::string Indent(size_t level, size_t spaces_per_level) {
   return std::string(level * spaces_per_level, ' ');
 }
 
-std::string Header(std::string_view value, size_t level, size_t width,
+std::string Header(std::string value, size_t level, size_t width,
                    const FormatOptions &options) {
-  // Sanitize the input text
-  std::string safe_value = Sanitize(value);
-  
+
   // Determine the padding character based on level
   char padding_char;
   switch (level) {
@@ -245,7 +242,7 @@ std::string Header(std::string_view value, size_t level, size_t width,
     padding_char = '.';
     break;
   }
-  
+
   // Helper lambda to apply formatting if needed
   auto apply_formatting = [&options](const std::string &text) -> std::string {
     if (options.foreground != Color::Default ||
@@ -255,30 +252,31 @@ std::string Header(std::string_view value, size_t level, size_t width,
     }
     return text;
   };
-  
+
   // Calculate padding needed on each side
   // Format: "=== text ===" with at least 3 padding chars on each side
   size_t min_padding = 3;
-  size_t text_length = safe_value.length();
-  size_t total_padding_needed = width - text_length - 2; // 2 for spaces around text
-  
+  size_t text_length = value.length();
+  size_t total_padding_needed =
+      width - text_length - 2; // 2 for spaces around text
+
   // If the text is too long, just wrap with minimum padding
   if (text_length + 2 + (2 * min_padding) > width) {
     std::ostringstream result;
-    result << std::string(min_padding, padding_char) << ' ' << safe_value << ' '
+    result << std::string(min_padding, padding_char) << ' ' << value << ' '
            << std::string(min_padding, padding_char);
     return apply_formatting(result.str());
   }
-  
+
   // Calculate balanced padding
   size_t left_padding = total_padding_needed / 2;
   size_t right_padding = total_padding_needed - left_padding;
-  
+
   // Build the header
   std::ostringstream result;
-  result << std::string(left_padding, padding_char) << ' ' << safe_value << ' '
+  result << std::string(left_padding, padding_char) << ' ' << value << ' '
          << std::string(right_padding, padding_char);
-  
+
   return apply_formatting(result.str());
 }
 } // namespace conmat

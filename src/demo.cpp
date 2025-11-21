@@ -89,17 +89,19 @@ int main() {
   std::cout << Indent(1) << "Level 1 (2 spaces)" << std::endl;
   std::cout << Indent(2) << "Level 2 (4 spaces)" << std::endl;
   std::cout << Indent(3) << "Level 3 (6 spaces)" << std::endl;
-  
+
   // Indentation with custom spaces per level
   std::cout << Indent(1, 4) << "Level 1 with 4 spaces per level" << std::endl;
   std::cout << Indent(2, 4) << "Level 2 with 4 spaces per level" << std::endl;
-  
+
   // Indented with color
-  std::cout << Indent(1) << Colorize("Red indented text", Color::Red) << std::endl;
-  
+  std::cout << Indent(1) << Colorize("Red indented text", Color::Red)
+            << std::endl;
+
   // Indented with style
-  std::cout << Indent(2) << Stylize("Bold indented text", Style::Bold) << std::endl;
-  
+  std::cout << Indent(2) << Stylize("Bold indented text", Style::Bold)
+            << std::endl;
+
   // Indented numbers
   std::cout << Indent(1) << 12345 << std::endl;
   std::cout << Indent(2) << 3.14159 << std::endl;
@@ -111,19 +113,20 @@ int main() {
   std::cout << Header("Level 2 Header", 2) << std::endl;
   std::cout << Header("Level 3 Header", 3) << std::endl;
   std::cout << Header("Level 4 Header", 4) << std::endl;
+  std::cout << Header(conmat::TestPassed(), 2) << std::endl;
   std::cout << std::endl;
-  
+
   // Headers with custom width
   std::cout << "Headers with custom width:" << std::endl;
   std::cout << Header("Short", 1, 40) << std::endl;
   std::cout << Header("Medium Width", 2, 60) << std::endl;
   std::cout << std::endl;
-  
+
   // Colored headers
   std::cout << "Colored Headers:" << std::endl;
   FormatOptions cyan_header(Color::Cyan, Style::Bold);
   std::cout << Header("Important Section", 1, 80, cyan_header) << std::endl;
-  
+
   FormatOptions green_header(Color::Green);
   std::cout << Header("Subsection", 2, 80, green_header) << std::endl;
   std::cout << std::endl;
