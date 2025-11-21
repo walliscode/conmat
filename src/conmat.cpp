@@ -246,6 +246,16 @@ std::string Header(std::string_view value, size_t level, size_t width,
     break;
   }
   
+  // Helper lambda to apply formatting if needed
+  auto apply_formatting = [&options](const std::string &text) -> std::string {
+    if (options.foreground != Color::Default ||
+        options.background != Color::Default ||
+        options.style != Style::Default) {
+      return FormatImpl(text, options);
+    }
+    return text;
+  };
+  
   // Calculate padding needed on each side
   // Format: "=== text ===" with at least 3 padding chars on each side
   size_t min_padding = 3;
@@ -257,14 +267,7 @@ std::string Header(std::string_view value, size_t level, size_t width,
     std::ostringstream result;
     result << std::string(min_padding, padding_char) << ' ' << safe_value << ' '
            << std::string(min_padding, padding_char);
-    
-    // Apply formatting if any
-    if (options.foreground != Color::Default ||
-        options.background != Color::Default ||
-        options.style != Style::Default) {
-      return FormatImpl(result.str(), options);
-    }
-    return result.str();
+    return apply_formatting(result.str());
   }
   
   // Calculate balanced padding
@@ -276,12 +279,6 @@ std::string Header(std::string_view value, size_t level, size_t width,
   result << std::string(left_padding, padding_char) << ' ' << safe_value << ' '
          << std::string(right_padding, padding_char);
   
-  // Apply formatting if any
-  if (options.foreground != Color::Default ||
-      options.background != Color::Default || options.style != Style::Default) {
-    return FormatImpl(result.str(), options);
-  }
-  
-  return result.str();
+  return apply_formatting(result.str());
 }
 } // namespace conmat
