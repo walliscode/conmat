@@ -223,4 +223,62 @@ std::string TestFailed() { return Colorize("[✗]", Color::Red); }
 std::string Indent(size_t level, size_t spaces_per_level) {
   return std::string(level * spaces_per_level, ' ');
 }
+
+std::string Header(std::string_view value, size_t level, size_t width,
+                   const FormatOptions &options) {
+  // Sanitize the input text
+  std::string safe_value = Sanitize(value);
+  
+  // Determine the padding character based on level
+  char padding_char;
+  switch (level) {
+  case 1:
+    padding_char = '=';
+    break;
+  case 2:
+    padding_char = '-';
+    break;
+  case 3:
+    padding_char = '~';
+    break;
+  default:
+    padding_char = '.';
+    break;
+  }
+  
+  // Helper lambda to apply formatting if needed
+  auto apply_formatting = [&options](const std::string &text) -> std::string {
+    if (options.foreground != Color::Default ||
+        options.background != Color::Default ||
+        options.style != Style::Default) {
+      return FormatImpl(text, options);
+    }
+    return text;
+  };
+  
+  // Calculate padding needed on each side
+  // Format: "=== text ===" with at least 3 padding chars on each side
+  size_t min_padding = 3;
+  size_t text_length = safe_value.length();
+  size_t total_padding_needed = width - text_length - 2; // 2 for spaces around text
+  
+  // If the text is too long, just wrap with minimum padding
+  if (text_length + 2 + (2 * min_padding) > width) {
+    std::ostringstream result;
+    result << std::string(min_padding, padding_char) << ' ' << safe_value << ' '
+           << std::string(min_padding, padding_char);
+    return apply_formatting(result.str());
+  }
+  
+  // Calculate balanced padding
+  size_t left_padding = total_padding_needed / 2;
+  size_t right_padding = total_padding_needed - left_padding;
+  
+  // Build the header
+  std::ostringstream result;
+  result << std::string(left_padding, padding_char) << ' ' << safe_value << ' '
+         << std::string(right_padding, padding_char);
+  
+  return apply_formatting(result.str());
+}
 } // namespace conmat

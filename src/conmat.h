@@ -206,4 +206,33 @@ std::string TestFailed();
 ////////////////////////////////////////////////////////////
 std::string Indent(size_t level, size_t spaces_per_level = 2);
 
+////////////////////////////////////////////////////////////
+/// \brief Generate a header with centered text and padding
+///
+/// Creates a header with the given text centered and surrounded by
+/// padding characters. The padding character varies based on the level:
+/// - Level 1: '=' characters
+/// - Level 2: '-' characters  
+/// - Level 3: '~' characters
+/// - Level 4+: '.' characters
+///
+/// The total width is fixed at 80 characters by default. The text is
+/// centered with padding characters filling the remaining space.
+/// At least 3 padding characters appear on each side.
+///
+/// \param value The text to display in the header
+/// \param level Header level (1-4+, affects padding character)
+/// \param width Total width of the header line (default: 80)
+/// \param options Format options for the header
+/// \return Formatted header string with centered text
+///
+/// \example
+/// std::string h1 = Header("test", 1);     // "=== test ==="
+/// std::string h2 = Header("title", 2);    // "--- title ---"
+/// std::string h3 = Header("section", 3);  // "~~~ section ~~~"
+///
+////////////////////////////////////////////////////////////
+std::string Header(std::string_view value, size_t level, size_t width = 80,
+                   const FormatOptions &options = {});
+
 } // namespace conmat

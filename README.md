@@ -7,6 +7,7 @@ A C++ library for adding ANSI string formatting to terminal output. Provides saf
 - **Safe String Formatting**: Uses enums to prevent string injection attacks
 - **ANSI Color Support**: Full color palette including bright variants
 - **Text Styles**: Bold, italic, underline, strikethrough, and more
+- **Header Functions**: Create centered headers with level-specific formatting
 - **Divider Functions**: Create customizable dividers and lines
 - **CMake Library**: Easy integration into other projects
 - **No Direct Output**: Library only formats strings, doesn't print them
@@ -114,6 +115,29 @@ std::cout << Indent(1) << 42 << std::endl;
 std::cout << Indent(2) << 3.14 << std::endl;
 ```
 
+### Headers
+
+```cpp
+// Create headers with different levels (1-4+)
+std::cout << Header("Main Title", 1) << std::endl;        // === Main Title ===
+std::cout << Header("Subsection", 2) << std::endl;        // --- Subsection ---
+std::cout << Header("Minor Section", 3) << std::endl;     // ~~~ Minor Section ~~~
+std::cout << Header("Note", 4) << std::endl;              // ... Note ...
+
+// Custom width (default: 80)
+std::cout << Header("Short", 1, 40) << std::endl;
+
+// Colored headers
+FormatOptions cyan_header(Color::Cyan, Style::Bold);
+std::cout << Header("Important", 1, 80, cyan_header) << std::endl;
+```
+
+Headers automatically center text and balance padding characters based on the level:
+- Level 1: `=` characters
+- Level 2: `-` characters
+- Level 3: `~` characters
+- Level 4+: `.` characters
+
 ### String Safety
 
 ```cpp
@@ -137,6 +161,7 @@ std::string plain = StripAnsi(Colorize("colored", Color::Red));
 - `Colorize(text, color)` - Apply foreground color
 - `Stylize(text, style)` - Apply text style
 - `Indent(level, spaces_per_level)` - Generate indentation for given level (default: 2 spaces per level)
+- `Header(value, level, width, options)` - Create centered header with level-specific padding character (default width: 80)
 - `Divider(symbol, width, options)` - Create divider line with custom symbol (runtime override)
 - `Divider(width, options)` - Create divider line with CMake-configured default symbol
 - `Sanitize(text)` - Remove control characters

@@ -325,6 +325,135 @@ void test_indent_usage() {
   std::cout << "✓ Indent usage test passed" << std::endl;
 }
 
+void test_header_basic() {
+  using namespace conmat;
+  
+  // Test basic header with level 1 (= character)
+  std::string h1 = Header("test", 1);
+  assert(h1.length() == 80);
+  assert(h1.find("test") != std::string::npos);
+  assert(h1.find('=') != std::string::npos);
+  
+  // Test that text is centered with spaces
+  assert(h1.find(" test ") != std::string::npos);
+  
+  std::cout << "✓ Header basic test passed" << std::endl;
+}
+
+void test_header_levels() {
+  using namespace conmat;
+  
+  // Test level 1 uses '='
+  std::string h1 = Header("test", 1);
+  assert(h1.find('=') != std::string::npos);
+  assert(h1.find('-') == std::string::npos);
+  
+  // Test level 2 uses '-'
+  std::string h2 = Header("test", 2);
+  assert(h2.find('-') != std::string::npos);
+  assert(h2.find('=') == std::string::npos);
+  
+  // Test level 3 uses '~'
+  std::string h3 = Header("test", 3);
+  assert(h3.find('~') != std::string::npos);
+  assert(h3.find('-') == std::string::npos);
+  
+  // Test level 4+ uses '.'
+  std::string h4 = Header("test", 4);
+  assert(h4.find('.') != std::string::npos);
+  
+  std::string h5 = Header("test", 10);
+  assert(h5.find('.') != std::string::npos);
+  
+  std::cout << "✓ Header levels test passed" << std::endl;
+}
+
+void test_header_width() {
+  using namespace conmat;
+  
+  // Test default width (80)
+  std::string h1 = Header("test", 1);
+  assert(h1.length() == 80);
+  
+  // Test custom width (40)
+  std::string h2 = Header("test", 1, 40);
+  assert(h2.length() == 40);
+  assert(h2.find("test") != std::string::npos);
+  
+  // Test custom width (100)
+  std::string h3 = Header("title", 2, 100);
+  assert(h3.length() == 100);
+  assert(h3.find("title") != std::string::npos);
+  
+  std::cout << "✓ Header width test passed" << std::endl;
+}
+
+void test_header_centering() {
+  using namespace conmat;
+  
+  // Test that padding is balanced (or nearly balanced)
+  std::string h1 = Header("test", 1, 20);
+  assert(h1.length() == 20);
+  
+  // Find the position of "test" to verify centering
+  size_t pos = h1.find(" test ");
+  assert(pos != std::string::npos);
+  
+  // The text should be roughly centered
+  // With "test" (4 chars) + 2 spaces = 6 chars used
+  // Remaining 14 chars split as 7 on each side
+  // So the pattern should be "======= test ======="
+  assert(h1 == "======= test =======");
+  
+  std::cout << "✓ Header centering test passed" << std::endl;
+}
+
+void test_header_long_text() {
+  using namespace conmat;
+  
+  // Test with text that's too long for the width
+  std::string long_text = "This is a very long header text";
+  std::string h1 = Header(long_text, 1, 20);
+  
+  // Should still have the text and minimum padding
+  assert(h1.find(long_text) != std::string::npos);
+  assert(h1.find("=== ") != std::string::npos);
+  assert(h1.find(" ===") != std::string::npos);
+  
+  std::cout << "✓ Header long text test passed" << std::endl;
+}
+
+void test_header_formatting() {
+  using namespace conmat;
+  
+  // Test header with color formatting
+  FormatOptions cyan_opts(Color::Cyan);
+  std::string h1 = Header("test", 1, 80, cyan_opts);
+  assert(h1.find("\033[36m") != std::string::npos); // Cyan color code
+  assert(h1.find("test") != std::string::npos);
+  assert(h1.find("\033[0m") != std::string::npos); // Reset code
+  
+  // Test header with bold style
+  FormatOptions bold_opts(Color::Default, Style::Bold);
+  std::string h2 = Header("title", 2, 40, bold_opts);
+  assert(h2.find("\033[1m") != std::string::npos); // Bold code
+  assert(h2.find("title") != std::string::npos);
+  
+  std::cout << "✓ Header formatting test passed" << std::endl;
+}
+
+void test_header_empty_text() {
+  using namespace conmat;
+  
+  // Test with empty text
+  std::string h1 = Header("", 1, 20);
+  assert(h1.length() == 20);
+  // Should be all padding characters except for the two spaces
+  assert(h1.find("=") != std::string::npos);
+  
+  std::cout << "✓ Header empty text test passed" << std::endl;
+}
+
 int main() {
   std::cout << "Running conmat tests..." << std::endl << std::endl;
   
@@ -347,6 +476,13 @@ int main() {
   test_indent_default();
   test_indent_custom_spaces();
   test_indent_usage();
+  test_header_basic();
+  test_header_levels();
+  test_header_width();
+  test_header_centering();
+  test_header_long_text();
+  test_header_formatting();
+  test_header_empty_text();
   
   std::cout << std::endl << "All tests passed! ✓" << std::endl;
   
