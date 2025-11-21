@@ -105,6 +105,29 @@ int main() {
   std::cout << Indent(2) << 3.14159 << std::endl;
   std::cout << std::endl;
 
+  // Test headers
+  std::cout << "Headers:" << std::endl;
+  std::cout << Header("Level 1 Header", 1) << std::endl;
+  std::cout << Header("Level 2 Header", 2) << std::endl;
+  std::cout << Header("Level 3 Header", 3) << std::endl;
+  std::cout << Header("Level 4 Header", 4) << std::endl;
+  std::cout << std::endl;
+  
+  // Headers with custom width
+  std::cout << "Headers with custom width:" << std::endl;
+  std::cout << Header("Short", 1, 40) << std::endl;
+  std::cout << Header("Medium Width", 2, 60) << std::endl;
+  std::cout << std::endl;
+  
+  // Colored headers
+  std::cout << "Colored Headers:" << std::endl;
+  FormatOptions cyan_header(Color::Cyan, Style::Bold);
+  std::cout << Header("Important Section", 1, 80, cyan_header) << std::endl;
+  
+  FormatOptions green_header(Color::Green);
+  std::cout << Header("Subsection", 2, 80, green_header) << std::endl;
+  std::cout << std::endl;
+
   std::cout << Format("Demo completed successfully!",
                       FormatOptions(Color::Green, Style::Bold))
             << std::endl;
