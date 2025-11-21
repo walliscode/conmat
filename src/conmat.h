@@ -212,7 +212,7 @@ std::string Indent(size_t level, size_t spaces_per_level = 2);
 /// Creates a header with the given text centered and surrounded by
 /// padding characters. The padding character varies based on the level:
 /// - Level 1: '=' characters
-/// - Level 2: '-' characters  
+/// - Level 2: '-' characters
 /// - Level 3: '~' characters
 /// - Level 4+: '.' characters
 ///
@@ -232,7 +232,7 @@ std::string Indent(size_t level, size_t spaces_per_level = 2);
 /// std::string h3 = Header("section", 3);  // "~~~ section ~~~"
 ///
 ////////////////////////////////////////////////////////////
-std::string Header(std::string_view value, size_t level, size_t width = 80,
+std::string Header(std::string value, size_t level, size_t width = 80,
                    const FormatOptions &options = {});
 
 } // namespace conmat
