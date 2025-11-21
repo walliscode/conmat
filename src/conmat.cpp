@@ -220,22 +220,7 @@ std::string TestPassed() { return Colorize("[✓]", Color::Green); }
 
 std::string TestFailed() { return Colorize("[✗]", Color::Red); }
 
-std::string IndentImpl(std::string_view text, size_t spaces,
-                       const FormatOptions &options) {
-  // Create the indent string
-  std::string indent(spaces, ' ');
-  
-  // Build result with indentation
-  std::ostringstream result;
-  result << indent << text;
-  
-  // Apply formatting if any (FormatImpl will sanitize)
-  if (options.foreground != Color::Default ||
-      options.background != Color::Default || options.style != Style::Default) {
-    return FormatImpl(result.str(), options);
-  }
-  
-  // No formatting, so we need to sanitize ourselves
-  return Sanitize(result.str());
+std::string Indent(size_t level, size_t spaces_per_level) {
+  return std::string(level * spaces_per_level, ' ');
 }
 } // namespace conmat

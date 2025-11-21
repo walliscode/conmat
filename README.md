@@ -96,20 +96,22 @@ The default symbol is "=" if not specified. Runtime calls can always override th
 ### Indentation
 
 ```cpp
-// Default indentation (2 spaces)
-std::cout << Indent("This is indented") << std::endl;
+// Level-based indentation (default: 2 spaces per level)
+std::cout << Indent(0) << "No indent" << std::endl;
+std::cout << Indent(1) << "One level (2 spaces)" << std::endl;
+std::cout << Indent(2) << "Two levels (4 spaces)" << std::endl;
 
-// Custom indentation
-std::cout << Indent("4 spaces", 4) << std::endl;
-std::cout << Indent("8 spaces", 8) << std::endl;
+// Custom spaces per level
+std::cout << Indent(1, 4) << "One level (4 spaces)" << std::endl;
+std::cout << Indent(2, 4) << "Two levels (8 spaces)" << std::endl;
 
-// Indentation with colors
-FormatOptions red(Color::Red);
-std::cout << Indent("Red indented text", 2, red) << std::endl;
+// Combine with other formatting
+std::cout << Indent(1) << Colorize("Red text", Color::Red) << std::endl;
+std::cout << Indent(2) << Stylize("Bold text", Style::Bold) << std::endl;
 
-// Works with any streamable type
-std::cout << Indent(42, 4) << std::endl;
-std::cout << Indent(3.14, 2) << std::endl;
+// Works with any output
+std::cout << Indent(1) << 42 << std::endl;
+std::cout << Indent(2) << 3.14 << std::endl;
 ```
 
 ### String Safety
@@ -134,7 +136,7 @@ std::string plain = StripAnsi(Colorize("colored", Color::Red));
 - `Format(text, options)` - Format text with full options
 - `Colorize(text, color)` - Apply foreground color
 - `Stylize(text, style)` - Apply text style
-- `Indent(text, spaces, options)` - Indent text with specified number of spaces (default: 2)
+- `Indent(level, spaces_per_level)` - Generate indentation for given level (default: 2 spaces per level)
 - `Divider(symbol, width, options)` - Create divider line with custom symbol (runtime override)
 - `Divider(width, options)` - Create divider line with CMake-configured default symbol
 - `Sanitize(text)` - Remove control characters
